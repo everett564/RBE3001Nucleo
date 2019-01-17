@@ -133,7 +133,7 @@ int main() {
 	 *            source file
 	 */
 
-	coms.attach(new PidServer(pid, DOFs));
+	//coms.attach(new PidServer(pid, DOFs));
 	coms.attach(new StatusServer());
 	//coms.attach(new PidConfigServer(pid, DOFs));
 
