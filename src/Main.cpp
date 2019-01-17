@@ -4,7 +4,7 @@
  * Instructions
  * ------------
  * Welcome! This is the main file of the Nucleo C++ firmware.
- * The code in this source file starts all the control and communication loops 
+ * The code in this source file starts all the control and communication loops
  * required to control the arm. Please, take some time to familiarize yourself with the
  * workflow of the program.
  *
@@ -31,8 +31,8 @@ static PIDimp * pid[DOFs]; // pointer to PID controllers (one for each link)
 HIDSimplePacket coms;      // HID packet handlers
 
 // The following array contains the "home" positions (in encoder ticks) for each
-// of the robot's joints 
-float homePosition[3] = {0,0,0};
+// of the robot's joints
+float homePosition[3] = {-1040,-1050,1959};
 
 void runPid() {
 	// update all positions fast and together
@@ -68,7 +68,7 @@ int main() {
 	SPI * spi3 = spiDev;
 	SPI * spi4 = spiDev;
 	SPI * spi5 = spiDev;
-#else if defined(REV2)
+#elif defined(REV2)
 	SPI * spi3 = new SPI(PC_12, PC_11, PC_10); // spi(mosi, miso, clk)
 	SPI * spi4 = new SPI(PE_6, PE_5, PE_2); // spi(mosi, miso, clk)
 	SPI * spi5 = new SPI(PF_9, PF_8, PF_7); // spi(mosi, miso, clk)
@@ -102,7 +102,7 @@ int main() {
 		// we will now "zero" the encoder readings
 #ifdef DUMMYMODE // if operating in Dummy Mode, set the initial encoder reading to zero
 		pid[i]->ZeroPID();
-#else            // else, use the values in homePosition 
+#else            // else, use the values in homePosition
 		pid[i]->pidReset(pid[i]->GetPIDPosition() - homePosition[i]);
 #endif
 
@@ -134,6 +134,7 @@ int main() {
 	 */
 
 	coms.attach(new PidServer(pid, DOFs));
+	coms.attach(new StatusServer());
 	//coms.attach(new PidConfigServer(pid, DOFs));
 
 #ifdef DEBUG_

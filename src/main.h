@@ -9,7 +9,7 @@
 #include "../mbed-os/drivers/SPI.h"
 #include "drivers/Clock.h"
 #include "Servo.h"
-#include "drivers/MyPid.h"
+//#include "drivers/MyPid.h"
 #include "drivers/DummyPID.h"
 #include "drivers/HIDPacket.h"
 #include "main.h"
@@ -18,6 +18,7 @@
 //Coms
 #include "coms/PidServer.h"
 #include "coms/DummyServer.h"
+#include "coms/StatusServer.h"
 // DEFINES
 #define REV2
 //#define REV1
