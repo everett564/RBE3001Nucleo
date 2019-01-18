@@ -2,15 +2,26 @@
 #define RBE3001_STATUS_SERVER
 
 
+#include <PID_Bowler.h>
 #include <PacketEvent.h>
+#include "../drivers/MyPid.h"
 #include <cmath>              // needed for std::abs
 
 #define STATUS_SERVER_ID 01
 
 class StatusServer: public PacketEventAbstract
 {
+  private:
+  PIDimp ** myObjects;
+  int myPumberOfPidChannels;
 
- public:
+  public:
+  StatusServer (PIDimp ** pidObjects, int numberOfPidChannels)
+    : PacketEventAbstract(STATUS_SERVER_ID)
+  {
+    myObjects = pidObjects;
+    myPumberOfPidChannels = numberOfPidChannels;
+  }
   StatusServer ()
     : PacketEventAbstract(STATUS_SERVER_ID){ }
 

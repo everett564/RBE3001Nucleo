@@ -15,13 +15,13 @@ void StatusServer::event(float * packet){
 /*
 sends packet values
 */
-  for(int i = 0; i < 2; i++)
+  for(int i = 0; i <= 2; i++)
     {
-      //float position = myObjects[i]->GetPIDPosition();
-      //float velocity = myObjects[i]->getVelocity();
+      float position = myObjects[i]->GetPIDPosition();
+      float velocity = myObjects[i]->getVelocity();
 
-      packet[(i*3)+0] = 5.0;
-      packet[(i*3)+1] = 2.0;
+      packet[(i)+0] = position;
+      packet[(i)+3] = velocity;
       // theres a third space here you can add it later if needed
     }
 }
