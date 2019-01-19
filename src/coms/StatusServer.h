@@ -7,7 +7,7 @@
 #include "../drivers/MyPid.h"
 #include <cmath>              // needed for std::abs
 
-#define STATUS_SERVER_ID 01
+#define STATUS_SERVER_ID 03
 
 class StatusServer: public PacketEventAbstract
 {
