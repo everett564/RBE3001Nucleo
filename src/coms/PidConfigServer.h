@@ -1,13 +1,13 @@
 /**
- * @file PidServer.h 
+ * @file PidServer.h
  * @brief PidServer for the RBE3001 robotic arm
- * 
+ *
  * @section RBE3001 - Nucleo Firmware - PidServer
  *
  * Instructions
  * ------------
- * This class implements a communication server that can be used to 
- * configure the gains of the PID controller. 
+ * This class implements a communication server that can be used to
+ * configure the gains of the PID controller.
  *
  * IMPORTANT - The identifier for this server is the integer number 65.
  *
@@ -21,20 +21,20 @@
 #include "../drivers/MyPid.h"
 #include <cmath>               // needed for std::abs
 
-#define PIDCONFIG_SERVER_ID 02 // identifier for this server
+#define PIDCONFIG_SERVER_ID 04 // identifier for this server
 
 
 /**
- *  @brief This class is responsible for updating the gains of the PID 
+ *  @brief This class is responsible for updating the gains of the PID
  *         controller. Desired gains are received through HID from high-level
  *         Matlab code.
- */  
+ */
 class PidConfigServer: public PacketEventAbstract
 {
  private:
   PIDimp ** myPidObjects;
   int myPumberOfPidChannels;
-  
+
  public:
   // Packet ID needs to be set
   PidConfigServer (PIDimp ** pidObjects, int numberOfPidChannels)
@@ -43,7 +43,7 @@ class PidConfigServer: public PacketEventAbstract
     myPidObjects=pidObjects;
     myPumberOfPidChannels=numberOfPidChannels;
   }
-  
+
   // This method is called every time a packet from MATLAB is received
   // via HID
   void event(float * buffer);
