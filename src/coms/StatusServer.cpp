@@ -12,7 +12,7 @@
  */
 void StatusServer::event(float * packet){
 
-
+/*
   for (int i = 0; i < myPumberOfPidChannels; i++)
     {
       float setpoint = packet[(i)+0];
@@ -36,7 +36,7 @@ void StatusServer::event(float * packet){
     	 __enable_irq();
     	}
     }
-
+*/
 /*
 sends packet values
 */
