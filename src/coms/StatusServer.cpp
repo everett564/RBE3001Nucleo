@@ -12,7 +12,7 @@
  */
 void StatusServer::event(float * packet){
 
-  myObjects[i]->SetPIDEnabled(true);
+
   for (int i = 0; i < myPumberOfPidChannels; i++)
     {
       float setpoint = packet[(i)+0];
@@ -21,14 +21,15 @@ void StatusServer::event(float * packet){
 
       // When polling for the current positon, we are passing down setpoints over and over. If the setpoint is already set we want to skip
       // Bound function is checking the incoming value agains the previouslt set value
-      bool newUpdate = !myPidObjects[i]->bound(setpoint,
-					       myPidObjects[i]->state.interpolate.set,
+      bool newUpdate = !myObjects[i]->bound(setpoint,
+					       myObjects[i]->state.interpolate.set,
 					       0.01,   // is the incoming setpoint plus 0.01 from the last setpoint
 					       0.01);// is the incoming setpoint minus 0.01 from the last setpoint
       // If the incoming value is outside of the previous value, then we actually set the PID controller
       if(newUpdate){
     	  // disable interrupts first
     	  __disable_irq();
+        myObjects[i]->SetPIDEnabled(true);
     	  // go to setpoint in timeOfMotion ms, linear interpolation
     	  myObjects[i]->SetPIDTimed(setpoint, timeOfMotion);
     	  // re-enable interrupts
