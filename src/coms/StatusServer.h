@@ -5,7 +5,8 @@
 #include <PID_Bowler.h>
 #include <PacketEvent.h>
 #include "../drivers/MyPid.h"
-#include <cmath>              // needed for std::abs
+#include <cmath>
+          // needed for std::abs
 
 #define STATUS_SERVER_ID 03
 
@@ -28,6 +29,7 @@ class StatusServer: public PacketEventAbstract
   // This method is called every time a packet from MATLAB is received
   // via HID
   void event(float * buffer);
+
 };
 
 #endif /* end of include guard: RBE3001_STATUS_SERVER */

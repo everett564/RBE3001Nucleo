@@ -9,7 +9,7 @@ PIDimp::PIDimp(Servo * myServo, AS5050 * myEncoder, AnalogIn * myLoadCell )
   loadCell = myLoadCell;
   runningTotalIndex=0;
   runningTotal=0;
-  
+
   for (int i=0;i<SENSOR_SUM;i++)
     runningValues[i]=0;
 }
@@ -22,10 +22,10 @@ float PIDimp::getPosition( )
   runningValues[runningTotalIndex]=(float)encoder->totalAngle();
   runningTotal +=runningValues[runningTotalIndex];
   runningTotalIndex++;
-  
+
   if(runningTotalIndex>=SENSOR_SUM)
     runningTotalIndex = 0;
-  
+
   return runningTotal/SENSOR_SUM;
 }
 
@@ -47,39 +47,39 @@ float PIDimp::resetPosition( float newCenter)
 void PIDimp::onPidConfigureLocal()
 {
   setPIDConstants(kp,ki,kd);
-  
+
   // pd velocity constants
   state.config.V.P=vkp;
   state.config.V.D=vkd;
-  
+
   // this will change the sign of the output signal, and will flip between converging and and diverging
   state.config.Polarity=true;
   state.config.stop=0.5f;// the center value for the servo object
-  
+
   // this is the maximum value that should come in through setOutputLocal
   state.config.outputMaximum=0.7f;
   //state.config.outputMaximum=1.0f;
-  
+
   // this is the minimum value that should come in through setOutputLocal
   state.config.outputMinimum=0.3f;
   //state.config.outputMinimum=0.0f;
-  
+
   // the smallest increment of change for the output
   state.config.outputIncrement=0.0005f;
-  
+
   // the upper and lower hystersis values for where the motor starts moving
   state.config.upperHistoresis = state.config.stop+0.01;
   state.config.lowerHistoresis = state.config.stop-0.01;
-  
+
   //We have hand set the values, the system is calibrated
   state.calibration.calibrated = true;
   state.config.calibrationState= CALIBRARTION_DONE;
-  
+
   // a value in encoder units that representst the noise floor of the sensor when detecting stall homing
   state.homing.homingStallBound = 20.0f;
   //30 sets to 100ms velocity loop
   setVelocityControllerDivisor(60);// Sets the number of PID cycles to run before running one velocity controller
-  printf("\r\nPID initialized"); 
+  printf("\r\nPID initialized");
   gravityCompTerm=0;
 }
 
@@ -104,7 +104,7 @@ PidLimitEvent* PIDimp::checkPIDLimitEvents()
 {
   currentEvent.type=NO_LIMIT;
   // if limit hardware is used it can be checked here
-  
+
   return &currentEvent;
 }
 
@@ -113,4 +113,8 @@ PidLimitEvent* PIDimp::checkPIDLimitEvents()
 float PIDimp::getMs()
 {
   return ((float)clock_us()) / 1000.0;
+}
+
+void PIDimp::updateHomePos(float homePos){
+  pidReset(GetPIDPosition()-homePos);
 }

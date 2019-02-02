@@ -17,6 +17,7 @@
  *
  */
 #include "main.h"
+
 #define  DOFs  3     // this macro defines the number of joints of the robotic arm
 //#define  DUMMYMODE   // this macro selects the running mode - see instructions above
 
@@ -29,10 +30,12 @@
 Ticker pidTimer;           // implements a timer
 static PIDimp * pid[DOFs]; // pointer to PID controllers (one for each link)
 HIDSimplePacket coms;      // HID packet handlers
+float homePosition[3]  = {-1040-2.25,-1050-6.55,1959-2.25};
+
 
 // The following array contains the "home" positions (in encoder ticks) for each
 // of the robot's joints
-float homePosition[3] = {-1040-2.25,-1050-6.55,1959-2.25};
+
 
 void runPid() {
 	// update all positions fast and together
@@ -48,10 +51,10 @@ void runPid() {
  */
 int main() {
 
-#ifdef DEBUG
-	printf("\r\n\r\n RBE3001 Arm Firmware \r\n\r\n");
-	printf("\r\n\r\n Initializing... \r\n\r\n");
-#endif
+// #ifdef DEBUG
+// 	printf("\r\n\r\n RBE3001 Arm Firmware \r\n\r\n");
+// 	printf("\r\n\r\n Initializing... \r\n\r\n");
+// #endif
 
 	/*
 	 * ======= PART 2a: Initialize PID control ===================================
@@ -137,10 +140,10 @@ int main() {
 	coms.attach(new StatusServer(pid,DOFs));
 	coms.attach(new PidConfigServer(pid, DOFs));
 
-#ifdef DEBUG_
-	printf("\r\n\r\n Initialization complete. \r\n\r\n");
-	printf("\r\n\r\n Starting main loop... \r\n\r\n");
-#endif
+// #ifdef DEBUG_
+// 	printf("\r\n\r\n Initialization complete. \r\n\r\n");
+// 	printf("\r\n\r\n Starting main loop... \r\n\r\n");
+// #endif
 
 	/*
 	 * ======= PART 2c: Main loop ================================================
@@ -163,16 +166,16 @@ int main() {
 		coms.server();
 
 		// The following code prints out debug statements.
-#ifdef DEBUG_
-// print encoder values for each joint
-			printf("\r\nEncoder Value = %f , %f , %f", pid[0]->GetPIDPosition(),
-					pid[1]->GetPIDPosition(), pid[2]->GetPIDPosition());
-
-			// print load cell readings
-			printf(" Setpoint = %f , %f , %f", pid[0]->state.SetPoint,
-					pid[1]->state.SetPoint, pid[2]->state.SetPoint);
-
-#endif // DEBUG
+// #ifdef DEBUG_
+// // print encoder values for each joint
+// 			printf("\r\nEncoder Value = %f , %f , %f", pid[0]->GetPIDPosition(),
+// 					pid[1]->GetPIDPosition(), pid[2]->GetPIDPosition());
+//
+// 			// print load cell readings
+// 			printf(" Setpoint = %f , %f , %f", pid[0]->state.SetPoint,
+// 					pid[1]->state.SetPoint, pid[2]->state.SetPoint);
+//
+// #endif // DEBUG
 
 	}
 

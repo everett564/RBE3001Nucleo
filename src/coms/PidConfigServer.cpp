@@ -20,8 +20,13 @@ void PidConfigServer::event(float * packet)
       float kpn = packet[(i*3)];
       float kin = packet[(i*3)+1];
       float kdn = packet[(i*3)+2];
-      
+
       // Set the PID constants
       myPidObjects[i]->setPIDConstants(kpn, kin, kdn);
     }
+    // if(packet[10]==1){
+    //   for(int i = 10; i<13;i++){
+    //     myPidObjects[i]->updateHomePos(packet[i+1]);
+    // }
+    // }
 }

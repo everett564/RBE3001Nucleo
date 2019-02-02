@@ -1,6 +1,9 @@
 
 #include "StatusServer.h"
 
+
+
+
 /**
  *  @brief This function handles incoming HID packets from MATLAB.
  *
@@ -10,8 +13,8 @@
  *               sent back to MATLAB through HID. This is useful to e.g. send sensor
  *               data to MATLAB for plotting.
  */
-void StatusServer::event(float * packet){
 
+void StatusServer::event(float * packet){
 /*
   for (int i = 0; i < myPumberOfPidChannels; i++)
     {
@@ -40,6 +43,9 @@ void StatusServer::event(float * packet){
 /*
 sends packet values
 */
+
+
+
   for(int i = 0; i <= 2; i++)
     {
       float position = myObjects[i]->GetPIDPosition();
