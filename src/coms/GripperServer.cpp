@@ -13,19 +13,17 @@
  */
 void GripperServer::event(float * packet){
 
- Servo myservo(GRIPPER_SERVO, 20);
-
 
 if(packet){
   for(int i=0; i<100; i++) {
-      myservo = i/100.0;
+      *myServo = i/100.0;
       wait(0.01);
   }
 
 }
 else{
   for(int i=100; i>0; i--) {
-      myservo = i/100.0;
+      *myServo = i/100.0;
       wait(0.01);
   }
 }
