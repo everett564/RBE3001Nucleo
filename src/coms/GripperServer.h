@@ -8,19 +8,18 @@
 #include "mbed.h"
 #include "main.h"
 
-//#define GRIPPER_SERVO PB_10
+#define GRIPPER_SERVO PB_10
 #define GRIPPER_SERVER 05
 
 class GripperServer: public PacketEventAbstract
 {
   private:
-  //PinName GRIPPER_SERVO = PB_10;
-  Servo* myServo = new Servo(GRIPPER_SERVO,20);
+  Servo * myServo;
 
   public:
   GripperServer (Servo* aServo)
     : PacketEventAbstract(GRIPPER_SERVER) {
-      *myServo = *aServo;
+      myServo = aServo;
     }
 
   // This method is called every time a packet from MATLAB is received

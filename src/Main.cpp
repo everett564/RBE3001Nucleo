@@ -135,10 +135,11 @@ int main() {
 	 *            by including the relevant header file at the beginning of this
 	 *            source file
 	 */
-
+  Servo* myServo = new Servo(GRIPPER_SERVO,5);
 	coms.attach(new PidServer(pid, DOFs));
 	coms.attach(new StatusServer(pid,DOFs));
 	coms.attach(new PidConfigServer(pid, DOFs));
+	coms.attach(new GripperServer(myServo));
 
 // #ifdef DEBUG_
 // 	printf("\r\n\r\n Initialization complete. \r\n\r\n");
