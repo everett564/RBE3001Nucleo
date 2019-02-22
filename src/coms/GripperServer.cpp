@@ -15,15 +15,14 @@ void GripperServer::event(float * packet){
 
 
 if(packet[0]==1){
-  for(int i=0; i<100; i++) {
-      myServo->write(i/100.0);
+      myServo->write(1);
       wait(0.01);
   }
 
 }
-else{
-  for(int i=100; i>0; i--) {
-      myServo->write(i/100.0);
+else {
+
+      myServo->write(0);
       wait(0.01);
   }
 }
